@@ -37,6 +37,8 @@ p  = pcnulo( Q, Ak, g, b1);
 
 if (p == 0)
     % calculamos lambda
+    % podemos usar chol en (AA') o usar metodo del rango para calcularlo
+    % directamente, que es mas conveniente
     
     % encontrar A'
         
