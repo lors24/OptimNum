@@ -1,3 +1,7 @@
+
+% Para corres una iteracion
+
+
 % Introducir los valores iniciales
 %
 % Queremos minimizar el problema

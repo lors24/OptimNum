@@ -1,13 +1,14 @@
-function [I, xk, p, xmin] = ConjA(Q, c, A, b, F, d, xk)
+function [xmin, iter] = ConjA(Q, c, A, b, F, d, xk)
 
 % realiza una iteracion de ConjA
  % Definir el working set  I c CA
 I = [];
 flag = 0;
 xmin = 0;
+iter = 0;
 m  = length(A); % restricciones de igualdad
 R = length(F); % restricciones de desigualdad
-r  = length(I); % restricciones activas de desigualdad EN EL WORKING SET
+% restricciones activas de desigualdad EN EL WORKING SET
 
 %RESOLVER SUBPROBLEMA CUADRATICO
 %min (1/2)p'Qp + g'p sa Ak*p = 0
@@ -18,6 +19,7 @@ while (flag == 0)
     
     Ak = [A; F(I,:)]; % matriz de restricciones activas
     g  = Q*xk + c; % evaluamos el gradiente en xk
+    r  = length(I);
     b1 = zeros(m+r,1);
 
     if (isempty(Ak))
@@ -65,9 +67,10 @@ while (flag == 0)
         end    
         
     end
+    iter = iter +1;
+end
 end
 
-end
 
 
 
