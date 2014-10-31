@@ -12,11 +12,14 @@ c1 = Z'*(Q*xp + c); % lado derecho
 % resolver el sistema lineal: Q1*xz = -c1
 % Cholesky
 
-% despu?s vamos a sustituir esto por gradiente conjugado
+% despues vamos a sustituir esto por gradiente conjugado
 
 L = chol(Q1)';
-y = trin(L, -c1);   %Mi rutina para sistemas triangulares inferiores
-xz = tris(L',y);   %Mi rutina para sistemas triangulares superiores
+%y = trin(L, -c1);   %Mi rutina para sistemas triangulares inferiores
+%xz = tris(L',y);   %Mi rutina para sistemas triangulares superiores
+
+y = -L\c1;
+xz = L'\y;
 
 %
 x = xp + Z*xz; %solucion final
