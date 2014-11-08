@@ -19,12 +19,12 @@
 % Ingresar datos
 
 Q = 2 * eye(3);
-F = [eye(3); - eye(3)];
-A = [];
+F = eye(3);
+A = [1 1 1];
 b = [];
-c = [-4;-5;-3];
-d = [0 0 0 -1 -1 -1]';
-xk = [1 1 1]';
+c = [0 0 0]';
+d = zeros(3,1);
+xk = [0.5 0.5 0]';
 
 %PREPROCESAMIENTO: LA MATRIZ ES REALMENTE LINEALMENTE IDEPENDIENTE
 
@@ -32,12 +32,12 @@ xk = [1 1 1]';
 
 
 % Definir el working set  I c CA
-I = [4 5 6];
+I = [];
 
-m  = length(A); % restricciones de igualdad
+[m, n] = size(A); % restricciones de igualdad
 R = length(F); % restricciones de desigualdad
 r  = length(I); % restricciones activas de desigualdad EN EL WORKING SET
-flag = 0
+flag = 0;
 
 %RESOLVER SUBPROBLEMA CUADRATICO
 %min (1/2)p'Qp + g'p sa Ak*p = 0
@@ -45,7 +45,7 @@ flag = 0
     CA = find(F*xk == d);
     I = sort(I);
     Ak = [A; F(I,:)]; % matriz de restricciones activas
-    g  = Q*xk + c % evaluamos el gradiente en xk
+    g  = Q*xk + c; % evaluamos el gradiente en xk
     b1 = zeros(m+r,1);
 
     if (isempty(Ak))
@@ -56,20 +56,20 @@ flag = 0
     end
     
        
-    if (p == 0)
+    if (norm(p)<1.e-12)
          % CALCULAMOS LAMBDA, UNA VEZ QUE SE TIENE EL xk PODEMOS DESPEJARLA DE
         % LAS CONDICIONES DE PRIMER ORDEN
-        lambda = -(Ak*Ak')\(Ak*g)
+        lambda = -(Ak*Ak')\(Ak*g);
         % encontrar A'
         
         if (lambda <= 0)
             xmin = xk;
             flag = 1;
         else
-            %j = find(lambda > 0); NOTA: ESTO SEG?N YO GENERA UN VECTOR CON
-            %TODAS LAS LAMBDAS MAYORES A CERO Y QUEREMOS QUITAR SOLO UNA
-            j = find(lambda == max(lambda)); %ENCUENTRA EL M?S NEGATIVO SE PODR?A TENER OTRAS CONDICIONES
-            I = I(I~=j); % quitamos la restriccion j
+            %TODAS LAS LAMBDAS MAYORES A CERO Y QUEREMOS QUITAR SOLO UNA,
+            %las mas positiva
+            [~, j] = max(lambda); 
+            I(j) = []; % quitamos la restriccion j
         end
     
     else  % p ~= 0 

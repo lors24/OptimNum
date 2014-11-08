@@ -9,7 +9,7 @@ c = [-4;-5;-3];
 d = [0 0 0 -1 -1 -1]';
 xk = [0 0.5 0.5]';
 
-[xmin1, niter1] = ConjA(Q, c, A, b, F, d)
+[xmin1, niter1] = ConjA2(Q, c, A, b, F, d)
 
 % problema 9 de la tarea
 
@@ -21,7 +21,7 @@ c = [-2 -5]';
 d = [-2 -6 -2 0 0]';
 xk = [2 0]';
 
-[xmin2, niter2] = ConjA(Q, c, A, b, F, d)
+[xmin2, niter2] = ConjA2(Q, c, A, b, F, d)
 
 % simplejo
 
@@ -32,7 +32,7 @@ b = [1];
 c = [0 0 0]';
 d = zeros(3,1);
 %xk = [0.5 0.5 0]';
-[xmin3, niter3] = ConjA(Q, c, A, b, F, d)
+[xmin3, niter3] = ConjA2(Q, c, A, b, F, d)
 
 % GeneraPC truena
 

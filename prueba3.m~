@@ -37,4 +37,4 @@ d = zeros(3,1);
 % GeneraPC truena
 
 [G,A,F,c,b,d] = Generapc1(500,200,150, 0.5);
-[xmin4, niter4] = ConjA2(G,c,A,b,F,d);
+[xmin4, niter4] = ConjA(G,c,A,b,F,d);
